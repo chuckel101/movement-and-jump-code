@@ -1,0 +1,47 @@
+extends KinematicBody2D
+
+
+const SPEED = 150
+const GRAVITY = 10
+const JUMP_POWER = -250
+const FLOOR = Vector2(0 , -1)
+
+# Declare member variables here. Examples:
+var player_movement = Vector2()
+var speed = 150
+var on_ground = false
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	#player_movement = Vector2(20 , 0)
+	#player_movement.y = 70
+	pass
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta):
+	if (Input.is_action_pressed("move_left")):
+		player_movement.x = -speed
+	elif Input.is_action_pressed("move_right"):
+		player_movement.x = speed
+	else:
+		player_movement.x = 0
+
+	if (Input.is_action_just_pressed("move_up")):
+		player_movement.y = JUMP_POWER
+
+
+	player_movement.y += GRAVITY
+
+
+	if is_on_floor():
+		on_ground = true
+	else:
+		on_ground = false
+
+
+
+
+
+
+
+
+
+	player_movement = move_and_slide(player_movement, FLOOR)
